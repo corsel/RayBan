@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-float ambientLuminance = 1.0f;
+float ambientLuminance = 0.4f;
 
 //Vector3 Struct
 Vector3::Vector3(float argX, float argY, float argZ)
@@ -98,7 +98,10 @@ Color Triangle::getColor(Ray argRay)
 {
 	Color returnColor;
 	returnColor = Color::scalarMultiply(diffuseColor, ambientLuminance);
+	for (int i = 0; i < lightVector.size(); i++)
+	{
 
+	}
 	return returnColor;
 }
 
@@ -131,7 +134,7 @@ Camera::Camera(Vector3 argPosition, Vector3 argLookAt, unsigned int argScreenWid
    direction = MathUtils::normalize(argLookAt - position);
    float tempCos = MathUtils::getCosProjectionAngle(argUp, direction);
    Vector3 projected = Vector3::scalarMultiply(MathUtils::normalize(direction), tempCos);
-   up = projected - up;
+   up = projected - argUp;
    binormal = MathUtils::arrayCrossProduct(up, direction);
 }
 int Camera::getScreenWidth() {return screenWidth;}
@@ -209,7 +212,7 @@ float MathUtils::getCosProjectionAngle(Vector3 argVector0, Vector3 argVector1)
 	dotProduct /= argVector0.getLength();
 	dotProduct /= argVector1.getLength();
 	return dotProduct;
-}
+}S
 
 //Operation Namespace
 int Operations::findNearestHit(Ray argRay)
