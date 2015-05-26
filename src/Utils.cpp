@@ -125,12 +125,13 @@ std::vector<Light*> lightVector;
 Camera::Camera(Vector3 argPosition, Vector3 argLookAt, unsigned int argScreenWidth, unsigned int argScreenHeight, float argNearClipping, float argFarClipping, float argFieldOfView, Vector3 argUp)
 : position(argPosition), screenWidth(argScreenWidth), screenHeight(argScreenHeight), nearClipping(argNearClipping), farClipping(argFarClipping), fieldOfView(argFieldOfView)
 {
-   pixelOffset.x = nearClipping / tan(fieldOfView / 2.0f);
-   pixelSize = pixelOffset.x / float(screenWidth);
-   pixelOffset.y = pixelSize * (float(screenHeight) - 1.0f) / 2.0f;
-   pixelOffset.x -= pixelSize / 2.0f;
+   pixelOffset.x = nearClipping * tan(fieldOfView / 2.0f);
+   pixelSize = pixelOffset.x / float(screenWidth) * 2.0f;
+   pixelOffset.y = pixelSize * float(screenHeight) / 2.0f;
    direction = MathUtils::normalize(argLookAt - position);
-   up = MathUtils::normalize(argUp);
+   float tempCos = MathUtils::getCosProjectionAngle(argUp, direction);
+   Vector3 projected = Vector3::scalarMultiply(MathUtils::normalize(direction), tempCos);
+   up = projected - up;
    binormal = MathUtils::arrayCrossProduct(up, direction);
 }
 int Camera::getScreenWidth() {return screenWidth;}
@@ -147,7 +148,7 @@ Ray Camera::getPixelRay(unsigned int argX, unsigned int argY)
 Vector3 MathUtils::normalize(Vector3 argVector)
 {
    float magnitude = sqrt(argVector.x*argVector.x + argVector.y*argVector.y + argVector.z*argVector.z);
-   return Vector3(argVector.x / magnitude, argVector.y / magnitude, argVector.y / magnitude);
+   return Vector3(argVector.x / magnitude, argVector.y / magnitude, argVector.z / magnitude);
 }
 float *MathUtils::rayTriangleIntersection(Ray argRay, Triangle argTriangle)
 {
