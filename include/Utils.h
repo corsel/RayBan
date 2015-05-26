@@ -122,6 +122,7 @@ namespace MathUtils
 	float getDeterminant3x3(float *argMatrix);
 	float *solveLinear(float *argA, float *argC); //Solves linear system A*x = c by Cramer's Rule.
 	Vector3 arrayCrossProduct(Vector3 argArray0, Vector3 argArray1);
+	float getCosProjectionAngle(Vector3 argVector0, Vector3 argVector1);
 }
 
 namespace Operations

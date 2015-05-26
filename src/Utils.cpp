@@ -21,6 +21,10 @@ float Vector3::dot(Vector3 argVector0, Vector3 argVector1) //static
 {
 	return argVector0.x*argVector1.x + argVector0.y*argVector1.y + argVector0.z*argVector1.z;
 }
+float Vector3::getLength()
+{
+	return sqrt(x*x + y*y + z*z);
+}
 
 //Color Struct
 Color::Color()
@@ -197,6 +201,13 @@ Vector3 MathUtils::arrayCrossProduct(Vector3 argArray0, Vector3 argArray1)
 	return Vector3(argArray0.y*argArray1.z - argArray0.z*argArray1.y,
 		argArray0.z*argArray1.x - argArray0.x*argArray1.z,
 		argArray0.x*argArray1.y - argArray0.y*argArray1.x);
+}
+float MathUtils::getCosProjectionAngle(Vector3 argVector0, Vector3 argVector1)
+{
+	float dotProduct = Vector3::dot(argVector0, argVector1);
+	dotProduct /= argVector0.getLength();
+	dotProduct /= argVector1.getLength();
+	return dotProduct;
 }
 
 //Operation Namespace

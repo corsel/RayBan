@@ -50,14 +50,23 @@ void init(int *argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	Triangle triangle(Vector3(3.0f, 3.0f, -3.0f),
-		Vector3(5.0f, 3.0f, -3.0f),
-		Vector3(3.0f, 5.0f, -3.0f));
+	Triangle triangle(Vector3(0.0f, 0.0f, -10.0f),
+		Vector3(1.0f, 0.0f, -10.0f),
+		Vector3(0.0f, 1.0f, -10.0f),
+		Color(1.0f, 0.0f, 0.0f));
+	Triangle triangle2(Vector3(0.0f, 0.0f, 0.0f),
+		Vector3(1.0f, 0.0f, 0.0f),
+		Vector3(0.0f, 1.0f, 0.0f),
+		Color(0.0f, 1.0f, 0.0f));
+	Triangle triangle3(Vector3(0.0f, 0.0f, 10.0f),
+		Vector3(1.0f, 0.0f, 10.0f),
+		Vector3(0.0f, 1.0f, 10.0f),
+		Color(0.0f, 0.0f, 1.0f));
 
 	mainCam = new Camera(
 		Vector3(-5.0f, -5.0f, 2.0f),
 		Vector3(0.0f, 0.0f, 0.0f),
-		320, 180,
+		640, 360,
 		0.5f, 100.0f,
 		60.0f);
 
